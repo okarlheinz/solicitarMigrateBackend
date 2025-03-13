@@ -5,7 +5,11 @@ const path = require("path");
 const cors = require("cors"); // Importa o pacote CORS
 
 const app = express();
-app.use(cors()); // Adiciona o middleware CORS para permitir todas as origens
+app.use(cors({
+  origin: "https://solicitarmigrate.vercel.app", // Permite apenas requisições desse frontend
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 
 const upload = multer();
 
