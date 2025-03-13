@@ -6,7 +6,7 @@ const cors = require("cors"); // Importa o pacote CORS
 
 const app = express();
 app.use(cors({
-  origin: "https://solicitarmigrate.vercel.app", // Permite apenas requisições desse frontend
+  origin: "https://solicitar-migrate-backend.vercel.app", // Permite apenas requisições desse frontend
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
