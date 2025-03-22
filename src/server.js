@@ -7,7 +7,7 @@ import cors from "cors";
 const app = express();
 
 app.use(cors({
-  origin: "https://solicitarmigrate.vercel.app/",
+  origin: "https://solicitarmigrate.vercel.app",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
