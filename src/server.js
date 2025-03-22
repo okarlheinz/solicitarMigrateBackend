@@ -1,12 +1,13 @@
-const express = require("express");
-const multer = require("multer");
-const FTP = require("ftp");
-const path = require("path");
-const cors = require("cors"); // Importa o pacote CORS
+import express from "express";
+import multer from "multer";
+import ftp from "ftp";
+import path from "path";
+import cors from "cors";
 
 const app = express();
+
 app.use(cors({
-  origin: "https://solicitarmigrate.vercel.app/", // Permite apenas requisições desse frontend
+  origin: "https://solicitarmigrate.vercel.app/",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
@@ -25,26 +26,19 @@ app.post("/upload", upload.single("file"), (req, res) => {
   }
 
   const fileName = req.file.originalname;
-  const fileExtension = path.extname(fileName);
+  const client = new ftp();
 
-  const client = new FTP();
   client.on("ready", () => {
     client.put(req.file.buffer, `/migrate/${fileName}`, (err) => {
+      client.end();
       if (err) {
-        client.end();
         return res.status(500).json({ message: "Erro ao enviar o arquivo." });
       }
-      client.end();
-      const fileUrl = `https://cdsimplantacao.com.br/migrate/${fileName}`;
-      res.json({ fileUrl });
+      res.json({ fileUrl: `https://cdsimplantacao.com.br/migrate/${fileName}` });
     });
   });
 
   client.connect(ftpConfig);
 });
-
-// app.listen(3000, () => {
-//   console.log("Servidor rodando em http://localhost:3000");
-// });
 
 export default app;
